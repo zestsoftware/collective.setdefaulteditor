@@ -1,13 +1,12 @@
 from setuptools import setup, find_packages
-import os
 
-version = '1.0'
+version = '1.0dev'
 
 setup(name='collective.setdefaulteditor',
       version=version,
       description="Set the default editor in Plone for all existing members.",
       long_description=open("README.txt").read() + "\n" +
-                       open(os.path.join("docs", "HISTORY.txt")).read(),
+                       open("CHANGES.txt").read(),
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
@@ -15,9 +14,9 @@ setup(name='collective.setdefaulteditor',
         "Programming Language :: Python",
         ],
       keywords='',
-      author='',
-      author_email='',
-      url='http://svn.plone.org/svn/collective/',
+      author='Maurits van Rees',
+      author_email='m.van.rees@zestsoftware.nl',
+      url='http://svn.plone.org/svn/collective/collective.setdefaulteditor',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['collective'],
