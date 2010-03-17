@@ -6,7 +6,7 @@
 
   <five:registerPackage package="." initialize=".initialize" />
 
-  <page
+  <browser:page
       for="Products.CMFCore.interfaces.ISiteRoot"
       name="set-default-editor"
       permission="cmf.ManagePortal"
