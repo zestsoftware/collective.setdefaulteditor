@@ -30,3 +30,13 @@ Todo
 - Add tests.
 
 
+Contributors
+============
+
+I (Maurits van Rees) found the main code in an article_ by Rob
+Gietema.  He apparently got the script from Kelly Craig.  And I have
+seen the same code in a post_ to the plone-setup list by Reinout van
+Rees.  So I claim it back in defense of our family honour. ;-)
+
+.. _article: http://plone.org/products/tinymce/documentation/how-to/how-to-set-tinymce-as-default-editor-for-current-users/
+.. _post: http://www.mail-archive.com/setup@lists.plone.org/msg01414.html
