@@ -19,6 +19,8 @@ class SetEditor(BrowserView):
         context = aq_inner(self.context)
         pprops = getToolByName(context, 'portal_properties')
         self.available_editors = pprops.site_properties.available_editors
+        md = getToolByName(context, 'portal_memberdata')
+        self.default_editor = md.getProperty('wysiwyg_editor', 'None')
 
         wanted_editor = self.request.get('editor')
         if not wanted_editor:

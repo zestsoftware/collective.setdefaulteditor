@@ -25,8 +25,7 @@
       <div class="field">
         <select name="editor"
                 id="editor"
-                tal:define="default string:None;
-                            current python:request.get('editor', default);">
+                tal:define="current python:request.get('editor', view.default_editor);">
           <tal:block tal:repeat="editor view/available_editors">
             <option tal:condition="python:editor != 'None'"
                     value="None"
