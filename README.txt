@@ -21,10 +21,6 @@ the instance log for details.  Remove the dryrun option (or set it to
 Todo
 ====
 
-- Create a template so the user can just click instead of having to edit the URL.
-
-- Also set the editor as new default in portal_memberdata.
-
 - Add tests.
 
 

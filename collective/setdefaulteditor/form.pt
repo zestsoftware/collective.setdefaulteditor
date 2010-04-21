@@ -48,6 +48,12 @@
       </div>
 
       <div class="field">
+        <input type="checkbox" name="update-default"
+               tal:attributes="checked python:request.get('update-default') and 'checked' or None;" />
+        <label for="update-default">Update default editor for <em>new</em> members as well.</label>
+      </div>
+
+      <div class="field">
         <input type="checkbox" name="dryrun"
                tal:attributes="checked python:request.get('dryrun') and 'checked' or None;" />
         <label for="dryrun">Dry run (nothing will be changed)</label>

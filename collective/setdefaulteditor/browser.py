@@ -1,9 +1,12 @@
+import logging
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.statusmessages.interfaces import IStatusMessage
 
 from collective.setdefaulteditor.utils import set_editor_for_all
+
+logger = logging.getLogger('collective.setdefaulteditor')
 
 
 class SetEditor(BrowserView):
@@ -14,7 +17,7 @@ class SetEditor(BrowserView):
         return self.index()
 
     def update(self):
-        """Apply settigns and update some variables on this view.
+        """Apply settings and update some variables on this view.
         """
         context = aq_inner(self.context)
         pprops = getToolByName(context, 'portal_properties')
@@ -41,3 +44,11 @@ class SetEditor(BrowserView):
         if dry_run:
             msg = 'Dry-run selected: nothing changed.'
             status.addStatusMessage(msg, type='warning')
+            return
+
+        if self.request.get('update-default'):
+            md._updateProperty('wysiwyg_editor', wanted_editor)
+            msg = "Updated wysiwyg_editor for new members to %r" % (
+                wanted_editor)
+            logger.info(msg)
+            status.addStatusMessage(msg, type='info')
