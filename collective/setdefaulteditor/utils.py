@@ -27,13 +27,18 @@ def set_editor_for_all(wanted_editor, dry_run=False):
         member = pm.getMemberById(member_id)
         editor = member.getProperty('wysiwyg_editor', None)
         if editor == wanted_editor:
-            logger.info('%s: %s already selected, leaving alone.',
-                        member_id, wanted_editor)
+            msg = '%s: %s already selected, leaving alone.' % (
+                member_id, wanted_editor)
             same += 1
         else:
+            msg = '%s: setting %s as default editor.' % (
+                member_id, wanted_editor)
             if not dry_run:
                 member.setMemberProperties({'wysiwyg_editor': wanted_editor})
-            logger.info('%s: setting %s as default editor.',
-                        member_id, wanted_editor)
             changed += 1
+        if dry_run:
+            logger.debug(msg)
+        else:
+            logger.info(msg)
+
     return (same, changed)
