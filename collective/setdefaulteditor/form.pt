@@ -50,7 +50,10 @@
       <div class="field">
         <input type="checkbox" name="update-default"
                tal:attributes="checked python:request.get('update-default') and 'checked' or None;" />
-        <label for="update-default">Update default editor for <em>new</em> members as well.</label>
+        <label for="update-default">
+          <em>Additionally</em> update the
+          default editor for <em>new</em> members as well.
+        </label>
       </div>
 
       <div class="field">
