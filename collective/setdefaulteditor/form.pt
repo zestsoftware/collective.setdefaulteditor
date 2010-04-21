@@ -14,17 +14,8 @@
 <div metal:fill-slot="prefs_configlet_content">
   <h1>Set the default editor for existing users</h1>
 
-  <div class="error"
-       tal:condition="view/error">
-    <h2>There was an error</h2>
-    <p tal:content="view/error" />
-  </div>
-
-  <div class="info"
-       tal:condition="view/messages">
-    <h2>Information</h2>
-    <p tal:repeat="msg view/messages"
-       tal:content="msg" />
+  <div metal:use-macro="here/global_statusmessage/macros/portal_message">
+    Portal status message
   </div>
 
   <form method="post"
