@@ -8,19 +8,33 @@ from collective.setdefaulteditor.utils import set_editor_for_all
 class SetEditor(BrowserView):
 
     def __call__(self):
-        wanted_editor = self.request.get('editor')
-        if not wanted_editor:
-            return "Call with for example '?editor=TinyMCE&dryrun=1'"
+        self.update()
+        # Render whatever was set as the template in zcml:
+        return self.index()
+
+    def update(self):
+        """Apply settigns and update some variables on this view.
+        """
+        self.error = ''
+        self.messages = []
         context = aq_inner(self.context)
         pprops = getToolByName(context, 'portal_properties')
-        available = pprops.site_properties.available_editors
-        if wanted_editor not in available:
-            return "%r is not available as editor. Choose one of %r." % (
-                wanted_editor, available)
-        dry_run = int(self.request.get('dryrun', 0))
-        dry_run = bool(dry_run)
+        self.available_editors = pprops.site_properties.available_editors
+
+        wanted_editor = self.request.get('editor')
+        if not wanted_editor:
+            # nothing to do
+            return
+
+        if wanted_editor not in self.available_editors:
+            self.error = "%r is not available as editor. Choose one of %r." % (
+                wanted_editor, self.available_editors)
+            return
+
+        dry_run = (self.request.get('dryrun', 'off') == 'on')
         same, changed = set_editor_for_all(wanted_editor, dry_run=dry_run)
-        msg = "Done. %d were the same; %d changed." % (same, changed)
+        msg = "Done. %d were the same; %d needed changing." % (same, changed)
+        self.messages.append(msg)
         if dry_run:
-            msg += ' Dry-run selected: nothing changed.'
-        return msg
+            msg = 'Dry-run selected: nothing changed.'
+            self.messages.append(msg)

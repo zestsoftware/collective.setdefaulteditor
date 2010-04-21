@@ -4,6 +4,9 @@ Changelog
 1.1 (unreleased)
 ----------------
 
+- Added form to make setting the editor more user friendly.
+  [maurits]
+
 - Check that the input for the wanted editor is sane: is that editor
   actually installed?
   [maurits]

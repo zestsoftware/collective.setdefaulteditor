@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/prefs_main_template/macros/master"
+      i18n:domain="plone">
+
+<metal:block fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border',1)" />
+
+<body>
+
+<div metal:fill-slot="prefs_configlet_content">
+  <h1>Set the default editor for existing users</h1>
+
+  <div class="error"
+       tal:condition="view/error">
+    <h2>There was an error</h2>
+    <p tal:content="view/error" />
+  </div>
+
+  <div class="info"
+       tal:condition="view/messages">
+    <h2>Information</h2>
+    <p tal:repeat="msg view/messages"
+       tal:content="msg" />
+  </div>
+
+  <form method="post"
+        action="">
+    <fieldset>
+      <legend>Select editor</legend>
+      <div class="field">
+        <select name="editor"
+                id="editor"
+                tal:define="default string:None;
+                            current python:request.get('editor', default);">
+          <tal:block tal:repeat="editor view/available_editors">
+            <option tal:condition="python:editor != 'None'"
+                    value="None"
+                    tal:attributes="value editor;
+                                    selected python:editor==current and 'selected' or None;"
+                    tal:content="editor"
+                    i18n:translate="">
+              WYSIWYG-editor
+            </option>
+            <option tal:condition="python:editor == 'None'"
+                    value="None"
+                    tal:attributes="value editor;
+                                    selected python:editor==current and 'selected' or None;"
+                    i18n:translate="label_ordinary_content_editor">
+              Basic HTML textarea editor (works in all browsers)
+            </option>
+
+          </tal:block>
+        </select>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" name="dryrun"
+               tal:attributes="checked python:request.get('dryrun') and 'checked' or None;" />
+        <label for="dryrun">Dry run (nothing will be changed)</label>
+      </div>
+    </fieldset>
+    <div class="formControls">
+      <input type="submit" class="context" value="Submit" />
+    </div>
+  </form>
+
+</div>
+</body>
+</html>
