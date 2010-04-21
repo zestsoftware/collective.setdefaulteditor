@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1 (unreleased)
+1.1 (2010-04-21)
 ----------------
 
 - Also offer option to set the chosen editor as new default in
