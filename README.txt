@@ -23,8 +23,6 @@ Todo
 
 - Create a template so the user can just click instead of having to edit the URL.
 
-- Check that the input for the wanted editor is sane: is that editor actually installed?
-
 - Also set the editor as new default in portal_memberdata.
 
 - Add tests.

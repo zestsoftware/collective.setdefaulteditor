@@ -4,10 +4,13 @@ Changelog
 1.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Check that the input for the wanted editor is sane: is that editor
+  actually installed?
+  [maurits]
 
 
 1.0 (2010-03-17)
 ----------------
 
 - Initial release
+  [maurits]
