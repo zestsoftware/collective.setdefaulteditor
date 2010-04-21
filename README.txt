@@ -3,19 +3,16 @@ Introduction
 
 When you install a new visual editor in your Plone Site, you can set
 ``wysiwyg_editor`` in portal_memberdata to the proper value for this
-new editor.  This only means that new users will get this new editor.
+new editor.  This only means that *new* users will get this new editor.
 To change the editor for all existing users, use this package.
 
-This makes available a browser view ``@@set-default-editor``.  Call
-this to get some simple instructions in plain text about how to edit
-the url to do something useful (patches for making a simple front-end
-template for this are welcome).
+This makes available a browser view ``@@set-default-editor`` and
+follow the instructions.  You can choose to run this in dry-run mode
+and see how many users would be changed.  When dry run is not
+selected, details are logged to the instance log.
 
-Call for example
-``<plone_site_url>/@@set-default-editor?editor=TinyMCE&dryrun=1`` to
-run this in dry-run mode and see how many users would be changed.  See
-the instance log for details.  Remove the dryrun option (or set it to
-``0``) to really set the editor.
+On the same form you can also select to set the default editor for
+*new* users at the same time as changing it for existing users.
 
 
 Todo
