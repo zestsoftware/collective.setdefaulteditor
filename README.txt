@@ -15,6 +15,22 @@ On the same form you can also select to set the default editor for
 *new* users at the same time as changing it for existing users.
 
 
+Many users
+==========
+
+When there are many users (see Site Setup / Users and Groups /
+Settings) we try to get all members by searching for a login with 'a',
+then 'b', etc.  This is not ideal, but if for example LDAP gives
+problems because it returns too many results (which means it does not
+actually return anything at all) then this may help.  If you still
+have trouble, try setting ``event-log-level = debug`` in the
+``instance`` section of your ``buildout.cfg``, run buildout again,
+start the instance in the foreground and then try again and see where
+it goes wrong.  Hopefully this gives you an idea for some custom code
+to write.  (If it is general enough, please share your work in a
+branch and contact me.)
+
+
 Todo
 ====
 

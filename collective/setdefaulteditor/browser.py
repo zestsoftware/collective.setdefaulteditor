@@ -41,9 +41,11 @@ class SetEditor(BrowserView):
         same, changed = set_editor_for_all(wanted_editor, dry_run=dry_run)
         msg = "Done. %d were the same; %d needed changing." % (same, changed)
         status.addStatusMessage(msg, type='info')
+        logger.info(msg)
         if dry_run:
             msg = 'Dry-run selected: nothing changed.'
             status.addStatusMessage(msg, type='warning')
+            logger.info(msg)
             return
 
         if self.request.get('update-default'):

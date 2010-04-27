@@ -4,7 +4,12 @@ Changelog
 1.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- When there are many users (site_properties/many_users) try to get
+  all members by searching for a login with 'a', then 'b', etc.  Not
+  ideal, but if for example LDAP gives problems because it returns too
+  many results (which means it does not actually return anything) then
+  this may help.
+  [maurits]
 
 
 1.1 (2010-04-21)
