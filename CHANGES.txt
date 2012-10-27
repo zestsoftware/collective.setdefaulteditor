@@ -8,6 +8,10 @@ Changelog
   compatibility.
   [maurits]
 
+- Make compatible with Plone 4.1+ (load CMFCore zcml for the
+  permissions).
+  [maurits]
+
 - Code moved to https://github.com/zestsoftware/collective.setdefaulteditor
   [maurits]
 
