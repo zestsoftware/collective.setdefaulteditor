@@ -1,0 +1,10 @@
+Ideas:
+
+- Maybe look only in mutable_properties?  Possibly we could then avoid
+  the not so nice code we have for the case that there are many users,
+  especially ldap users.
+
+- Allow setting all users back to the site default.  This is an option
+  since Plone 4.0.  We might as well do this in a backwards
+  incompatible way.  We can then lose the zope.app.component import
+  unconditionally too.
