@@ -4,6 +4,10 @@ Changelog
 1.3 (unreleased)
 ----------------
 
+- Avoid hard dependency on zope.app.component, to gain Plone 4.3
+  compatibility.
+  [maurits]
+
 - Code moved to https://github.com/zestsoftware/collective.setdefaulteditor
   [maurits]
 

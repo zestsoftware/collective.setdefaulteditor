@@ -1,7 +1,11 @@
 import logging
 import string
 from Products.CMFCore.utils import getToolByName
-from zope.app.component.hooks import getSite
+try:
+    from zope.component.hooks import getSite
+    getSite  # pyflakes
+except ImportError:
+    from zope.app.component.hooks import getSite
 
 logger = logging.getLogger('collective.setdefaulteditor')
 
