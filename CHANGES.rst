@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3 (unreleased)
+1.3 (2012-10-27)
 ----------------
 
 - Avoid hard dependency on zope.app.component, to gain Plone 4.3
