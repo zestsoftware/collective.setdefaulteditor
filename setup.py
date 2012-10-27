@@ -6,7 +6,7 @@ setup(name='collective.setdefaulteditor',
       version=version,
       description="Set the default editor in Plone for all existing members.",
       long_description=(open("README.txt").read() + "\n" +
-                        open("CHANGES.txt").read()),
+                        open("CHANGES.rst").read()),
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
