@@ -58,7 +58,10 @@ def set_editor_for_all(wanted_editor, dry_run=False):
     pm = getToolByName(site, 'portal_membership')
     same = 0
     changed = 0
-    logger.info("Updating editor for all members.")
+    if wanted_editor is None:
+        # Not to be confused with the string 'None' meaning a basic textarea.
+        wanted_editor = ''
+    logger.info("Updating editor for all members to %r.", wanted_editor)
     if dry_run:
         logger.info("Dry-run selected, not changing anything.")
 
@@ -67,11 +70,11 @@ def set_editor_for_all(wanted_editor, dry_run=False):
         member = pm.getMemberById(member_id)
         editor = member.getProperty('wysiwyg_editor', None)
         if editor == wanted_editor:
-            msg = '%s: %s already selected, leaving alone.' % (
+            msg = '%s: %r already selected, leaving alone.' % (
                 member_id, wanted_editor)
             same += 1
         else:
-            msg = '%s: setting %s as default editor.' % (
+            msg = '%s: setting %r as default editor.' % (
                 member_id, wanted_editor)
             if not dry_run:
                 member.setMemberProperties({'wysiwyg_editor': wanted_editor})

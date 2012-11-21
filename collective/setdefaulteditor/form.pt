@@ -27,7 +27,7 @@
                 id="editor"
                 tal:define="current python:request.get('editor', view.default_editor);">
           <tal:block tal:repeat="editor view/available_editors">
-            <option tal:condition="python:editor != 'None'"
+            <option tal:condition="python:editor not in ('None', '')"
                     value="None"
                     tal:attributes="value editor;
                                     selected python:editor==current and 'selected' or None;"
@@ -42,7 +42,14 @@
                     i18n:translate="label_ordinary_content_editor">
               Basic HTML textarea editor (works in all browsers)
             </option>
-
+            <option tal:condition="python:editor == ''"
+                    value=""
+                    tal:attributes="value editor;
+                                    selected python:editor==current and 'selected' or None;"
+                    i18n:domain="plone"
+                    i18n:translate="vocabulary-available-editor-novalue">
+              Use site default
+            </option>            
           </tal:block>
         </select>
       </div>

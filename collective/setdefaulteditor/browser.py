@@ -19,14 +19,20 @@ class SetEditor(BrowserView):
     def update(self):
         """Apply settings and update some variables on this view.
         """
+        marker = object()
         context = aq_inner(self.context)
         pprops = getToolByName(context, 'portal_properties')
-        self.available_editors = pprops.site_properties.available_editors
+        site_props = pprops.site_properties
+        self.available_editors = list(site_props.available_editors)
+        site_default_editor = site_props.getProperty('default_editor', marker)
+        # Add empty string for using site default.
+        if site_default_editor is not marker:
+            self.available_editors.append('')
         md = getToolByName(context, 'portal_memberdata')
         self.default_editor = md.getProperty('wysiwyg_editor', 'None')
 
-        wanted_editor = self.request.get('editor')
-        if not wanted_editor:
+        wanted_editor = self.request.get('editor', marker)
+        if wanted_editor is marker:
             # nothing to do
             return
 
@@ -49,8 +55,20 @@ class SetEditor(BrowserView):
             return
 
         if self.request.get('update-default'):
-            md._updateProperty('wysiwyg_editor', wanted_editor)
-            msg = "Updated wysiwyg_editor for new members to %r" % (
-                wanted_editor)
-            logger.info(msg)
-            status.addStatusMessage(msg, type='info')
+            if wanted_editor == '':
+                msg = "Cannot set wysiwyg_editor for new members to nothing."
+                logger.warn(msg)
+                status.addStatusMessage(msg, type='warn')
+            else:
+                if site_default_editor is marker:
+                    # Plone 3, usually.
+                    md._updateProperty('wysiwyg_editor', wanted_editor)
+                    msg = "Updated wysiwyg_editor for new members to %r" % (
+                        wanted_editor)
+                else:
+                    site_props._updateProperty('default_editor', wanted_editor)
+                    md._updateProperty('wysiwyg_editor', '')
+                    msg = "Updated default wysiwyg_editor to %r. New members will use the site default." % (
+                        wanted_editor)
+                logger.info(msg)
+                status.addStatusMessage(msg, type='info')
