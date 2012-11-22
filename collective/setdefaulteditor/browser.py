@@ -98,7 +98,7 @@ class SetEditor(BrowserView):
                 msg = ("Cannot set the default wysiwyg_editor to the site "
                        "default.")
                 logger.warn(msg)
-                status.addStatusMessage(msg, type='warn')
+                status.addStatusMessage(msg, type='warning')
             else:
                 if self.site_default_editor is None:
                     # Plone 3, usually.
