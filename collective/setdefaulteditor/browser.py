@@ -80,12 +80,16 @@ class SetEditor(BrowserView):
             status.addStatusMessage(msg, type='error')
             return
 
-        # Change the editor for all members.
+        # Is this a dry run or are we allowed to change things?
         dry_run = (self.request.get('dryrun', 'off') == 'on')
-        same, changed = set_editor_for_all(wanted_editor, dry_run=dry_run)
-        msg = "Done. %d were the same; %d needed changing." % (same, changed)
-        status.addStatusMessage(msg, type='info')
-        logger.info(msg)
+
+        # Change the editor for all members.
+        if self.request.get('update-user'):
+            same, changed = set_editor_for_all(wanted_editor, dry_run=dry_run)
+            msg = "Done. %d were the same; %d needed changing." % (
+                same, changed)
+            status.addStatusMessage(msg, type='info')
+            logger.info(msg)
 
         # Update the default editor.
         if self.request.get('update-default'):

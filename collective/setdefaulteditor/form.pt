@@ -12,17 +12,25 @@
 <body>
 
 <div metal:fill-slot="prefs_configlet_content">
-  <h1>Set the default editor for existing users</h1>
+  <h1>Set the default editor</h1>
+  <p>
+    You may want to first select an editor and set this as the default
+    editor.  Then select
+    <em i18n:translate="vocabulary-available-editor-novalue">Use site default</em>
+    and set this in the preferences of each existing user.
+  </p>
 
   <div metal:use-macro="here/global_statusmessage/macros/portal_message">
     Portal status message
   </div>
 
+  <br />
   <form method="post"
         action="">
-    <fieldset>
-      <legend>Select editor</legend>
       <div class="field">
+        <label for="editor">
+          Select the editor
+        </label>
         <select name="editor"
                 id="editor"
                 tal:define="current python:request.get('editor', view.default_editor);">
@@ -39,11 +47,18 @@
       </div>
 
       <div class="field">
+        <input type="checkbox" name="update-user"
+               tal:attributes="checked python:request.get('update-user') and 'checked' or None;" />
+        <label for="update-user">
+          Set the editor in the preferences of each existing user.
+        </label>
+      </div>
+
+      <div class="field">
         <input type="checkbox" name="update-default"
                tal:attributes="checked python:request.get('update-default') and 'checked' or None;" />
         <label for="update-default">
-          <em>Additionally</em> update the
-          default site editor as well.
+          Set the default editor that is used when the member has not set a preference.
         </label>
       </div>
 
@@ -52,7 +67,6 @@
                tal:attributes="checked python:request.get('dryrun') and 'checked' or None;" />
         <label for="dryrun">Dry run (nothing will be changed)</label>
       </div>
-    </fieldset>
     <div class="formControls">
       <input type="submit" class="context" value="Submit" />
     </div>
