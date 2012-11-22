@@ -26,25 +26,26 @@ class SetEditor(BrowserView):
         context = aq_inner(self.context)
         pprops = getToolByName(context, 'portal_properties')
         md = getToolByName(context, 'portal_memberdata')
-        wanted_editor = self.request.get('editor', marker)
         site_props = pprops.site_properties
-        site_default_editor = site_props.getProperty('default_editor', marker)
-        member_default_editor = md.getProperty('wysiwyg_editor', marker)
 
-        # Determine the default editor.
-        if member_default_editor is marker:
-            if site_default_editor is marker:
-                self.default_editor = 'None'
-            else:
-                self.default_editor = site_default_editor
-        else:
-            self.default_editor = member_default_editor
+        # Determine the wanted editor.
+        wanted_editor = self.request.get('editor', marker)
 
         # Get possible editors.
         editors = list(site_props.getProperty('available_editors', []))
         if '' not in editors:
             # Add empty string for using site default.
             editors.append('')
+
+        # What are the defaults?
+        self.site_default_editor = site_props.getProperty('default_editor')
+        self.member_default_editor = md.getProperty('wysiwyg_editor')
+        if self.site_default_editor not in editors:
+            self.site_default_editor = ''
+        if self.member_default_editor not in editors:
+            self.member_default_editor = ''
+
+        # Gather display information about the editors.
         self.available_editors = []
         for editor in editors:
             if editor == 'None':
@@ -98,17 +99,20 @@ class SetEditor(BrowserView):
                 logger.warn(msg)
                 status.addStatusMessage(msg, type='warn')
             else:
-                if site_default_editor is marker:
+                if self.site_default_editor is None:
                     # Plone 3, usually.
                     if not dry_run:
                         md._updateProperty('wysiwyg_editor', wanted_editor)
+                        self.member_default_editor = wanted_editor
                     msg = "Updated wysiwyg_editor for new members to %r" % (
                         wanted_editor)
                 else:
                     if not dry_run:
                         site_props._updateProperty(
                             'default_editor', wanted_editor)
+                        self.site_default_editor = wanted_editor
                         md._updateProperty('wysiwyg_editor', '')
+                        self.member_default_editor = ''
                     msg = ("Updated default wysiwyg_editor to %r. New members "
                            "will use the site default." % (wanted_editor))
                 logger.info(msg)

@@ -25,6 +25,15 @@
   </div>
 
   <br />
+  <p tal:condition="view/site_default_editor">
+    The default editor is: <span tal:content="view/site_default_editor" />.
+  </p>
+  <p tal:condition="view/member_default_editor">
+    The default editor for new users is: <span tal:content="view/member_default_editor" />.
+  </p>
+  <p tal:condition="python:view.site_default_editor and not view.member_default_editor">
+    New users will use the default editor of the site.
+  </p>
   <form method="post"
         action="">
       <div class="field">
@@ -32,8 +41,7 @@
           Select the editor
         </label>
         <select name="editor"
-                id="editor"
-                tal:define="current python:request.get('editor', view.default_editor);">
+                id="editor">
           <tal:block tal:repeat="editor view/available_editors">
             <option value="None"
                     tal:attributes="value editor/value;
