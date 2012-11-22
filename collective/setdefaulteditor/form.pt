@@ -27,29 +27,13 @@
                 id="editor"
                 tal:define="current python:request.get('editor', view.default_editor);">
           <tal:block tal:repeat="editor view/available_editors">
-            <option tal:condition="python:editor not in ('None', '')"
-                    value="None"
-                    tal:attributes="value editor;
-                                    selected python:editor==current and 'selected' or None;"
-                    tal:content="editor"
+            <option value="None"
+                    tal:attributes="value editor/value;
+                                    selected editor/selected;"
+                    tal:content="editor/title"
                     i18n:translate="">
               WYSIWYG-editor
             </option>
-            <option tal:condition="python:editor == 'None'"
-                    value="None"
-                    tal:attributes="value editor;
-                                    selected python:editor==current and 'selected' or None;"
-                    i18n:translate="label_ordinary_content_editor">
-              Basic HTML textarea editor (works in all browsers)
-            </option>
-            <option tal:condition="python:editor == ''"
-                    value=""
-                    tal:attributes="value editor;
-                                    selected python:editor==current and 'selected' or None;"
-                    i18n:domain="plone"
-                    i18n:translate="vocabulary-available-editor-novalue">
-              Use site default
-            </option>            
           </tal:block>
         </select>
       </div>
@@ -59,7 +43,7 @@
                tal:attributes="checked python:request.get('update-default') and 'checked' or None;" />
         <label for="update-default">
           <em>Additionally</em> update the
-          default editor for <em>new</em> members as well.
+          default site editor as well.
         </label>
       </div>
 
