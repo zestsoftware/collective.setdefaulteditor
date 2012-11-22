@@ -95,7 +95,8 @@ class SetEditor(BrowserView):
         # Update the default editor.
         if self.request.get('update-default'):
             if wanted_editor == '':
-                msg = "Cannot set wysiwyg_editor for new members to nothing."
+                msg = ("Cannot set the default wysiwyg_editor to the site "
+                       "default.")
                 logger.warn(msg)
                 status.addStatusMessage(msg, type='warn')
             else:
