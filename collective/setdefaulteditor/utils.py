@@ -1,5 +1,4 @@
 import logging
-import string
 from Products.CMFCore.utils import getToolByName
 try:
     from zope.component.hooks import getSite
@@ -10,7 +9,7 @@ except ImportError:
 logger = logging.getLogger('collective.setdefaulteditor')
 
 
-def get_all_users():
+def get_all_userids():
     """Get all users.
 
     Note that we could use pm.getMemberIds, but that does not find
@@ -18,32 +17,24 @@ def get_all_users():
 
     Also, we want to take into account that there may be many users,
     which in the case of LDAP means you get no results back or get an
-    error.  so in that case we do more specific searches.  But there
+    error.  So in that case we do more specific searches.  But there
     does not seem to be a way search for 'a*'.  Simply searching for
     'a' returns everyone with an 'a' somewhere in the login, which is
     not what we want.  Seems we need to do just that and do some extra
     filtering.
 
+    Actually, using pas.searchUsers works too.  In a standard Plone
+    site this will list all users from source_users and
+    mutable_properties.  If you add ldap then you will get users from
+    there as well, which could return an empty list if there are too
+    many users.  But we have the users from mutable_properties, which
+    are the ones we are actually going to change.
+
+    We just need to filter out duplicate ones.
     """
     site = getSite()
-    pm = getToolByName(site, 'portal_membership')
-    pp = getToolByName(site, 'portal_properties')
-    many_users = pp.site_properties.getProperty('many_users', False)
-
-    if not many_users:
-        for plone_user in pm.searchForMembers():
-            yield plone_user
-    else:
-        logger.info("Many users: splitting search into multiple queries.")
-        found = []
-        for char in string.ascii_letters:
-            logger.debug("Searching for %r", char)
-            for plone_user in pm.searchForMembers(login=char):
-                user_id = plone_user.getId()
-                if user_id not in found:
-                    logger.debug("Found %s", user_id)
-                    found.append(user_id)
-                    yield plone_user
+    pas = getToolByName(site, 'acl_users')
+    return set([user.get('id') for user in pas.searchUsers()])
 
 
 def set_editor_for_all(wanted_editor, dry_run=False):
@@ -53,6 +44,10 @@ def set_editor_for_all(wanted_editor, dry_run=False):
 
     Return a count for number of users who remain the same, and number
     of users who have changed (or will change).
+
+    Note that we could be tempted to change the data in
+    mutable_properties._storage directly, but the data not only lives
+    there but also in separate user property sheets.  So that is not advisable.
     """
     site = getSite()
     pm = getToolByName(site, 'portal_membership')
@@ -65,9 +60,12 @@ def set_editor_for_all(wanted_editor, dry_run=False):
     if dry_run:
         logger.info("Dry-run selected, not changing anything.")
 
-    for plone_user in get_all_users():
-        member_id = plone_user.getId()
+    for member_id in get_all_userids():
         member = pm.getMemberById(member_id)
+        if not member:
+            # Might be in ldap but not in Plone (yet).
+            logger.info("Member id %r not found.", member_id)
+            continue
         editor = member.getProperty('wysiwyg_editor', None)
         if editor == wanted_editor:
             msg = '%s: %r already selected, leaving alone.' % (

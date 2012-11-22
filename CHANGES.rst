@@ -4,7 +4,12 @@ Changelog
 1.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Be smarter about getting all users, also when many_users is true and
+  you are using ldap.
+  [maurits]
+
+- Start integrating Plone 4 default_editor field.
+  [maurits]
 
 
 1.3 (2012-10-27)
