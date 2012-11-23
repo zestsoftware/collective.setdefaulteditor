@@ -1,18 +1,26 @@
 Introduction
 ============
 
-When you install a new visual editor in your Plone Site, you can set
+When you install a new visual editor in your Plone 3 Site, you can set
 ``wysiwyg_editor`` in portal_memberdata to the proper value for this
 new editor.  This only means that *new* users will get this new editor.
 To change the editor for all existing users, use this package.
 
-This package makes available a browser view ``@@set-default-editor`` and
-follow the instructions.  You can choose to run this in dry-run mode
-and see how many users would be changed.  When dry run is not
-selected, details are logged to the instance log.
+In Plone 4 this should be less necessary, because this Plone version
+introduces an option for members to simply use whatever the current
+default editor of the site is.  If you migrate from Plone 3 you can
+still use this package to change all members so they use this option.
+
+This package makes available a browser view ``@@set-default-editor``
+to change the editor setting of members.  Follow the instructions
+there.  This has slightly different functionality for Plone 3 and
+Plone 4.  You can choose to run this in dry-run mode and see how many
+users would be changed.  When dry run is not selected, details are
+logged to the instance log.
 
 On the same form you can also select to set the default editor for
-*new* users at the same time as changing it for existing users.
+new users (Plone 3) or set the editor that is used when 'Use site
+default' is selected (Plone 4).
 
 
 Todo
