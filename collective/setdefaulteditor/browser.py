@@ -31,19 +31,16 @@ class SetEditor(BrowserView):
         # Determine the wanted editor.
         wanted_editor = self.request.get('editor', marker)
 
-        # Get possible editors.
-        editors = list(site_props.getProperty('available_editors', []))
-        if '' not in editors:
-            # Add empty string for using site default.
-            editors.append('')
-
         # What are the defaults?
         self.site_default_editor = site_props.getProperty('default_editor')
         self.member_default_editor = md.getProperty('wysiwyg_editor')
-        if self.site_default_editor not in editors:
-            self.site_default_editor = ''
-        if self.member_default_editor not in editors:
-            self.member_default_editor = ''
+
+        # Get possible editors.
+        editors = list(site_props.getProperty('available_editors', []))
+        if self.site_default_editor and '' not in editors:
+            # Plone 4.  A site default is supported, so add an empty
+            # string for using this.
+            editors.append('')
 
         # Gather display information about the editors.
         self.available_editors = []

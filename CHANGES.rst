@@ -8,7 +8,7 @@ Changelog
   you are using ldap.
   [maurits]
 
-- Start integrating Plone 4 default_editor field.
+- Use the default_editor site property when it is there (Plone 4).
   [maurits]
 
 
