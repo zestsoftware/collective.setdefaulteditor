@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.4 (unreleased)
+1.4 (2012-11-23)
 ----------------
 
 - Be smarter about getting all users, also when many_users is true and
