@@ -4,7 +4,9 @@ Changelog
 1.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- When first loading the form, select the site default editor or the
+  default member editor.
+  [maurits]
 
 
 1.4 (2012-11-23)

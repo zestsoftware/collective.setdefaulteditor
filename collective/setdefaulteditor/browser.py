@@ -44,6 +44,10 @@ class SetEditor(BrowserView):
 
         # Gather display information about the editors.
         self.available_editors = []
+        if wanted_editor is marker:
+            selected_editor = self.site_default_editor or self.member_default_editor
+        else:
+            selected_editor = wanted_editor
         for editor in editors:
             if editor == 'None':
                 title = PMF(u"label_ordinary_content_editor",
@@ -54,7 +58,7 @@ class SetEditor(BrowserView):
                             default=u"Use site default")
             else:
                 title = editor
-            if editor == wanted_editor:
+            if editor == selected_editor:
                 selected = 'selected'
             else:
                 selected = None
