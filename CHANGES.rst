@@ -4,6 +4,11 @@ Changelog
 1.5 (unreleased)
 ----------------
 
+- Split the form in two for clarity: one for setting the default
+  editor that is used when the member has not set a preference and one
+  for setting the editor in the preferences of each existing user.
+  [maurits]
+
 - When first loading the form, select the site default editor or the
   default member editor.
   [maurits]

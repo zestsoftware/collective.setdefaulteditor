@@ -10,76 +10,93 @@
              tal:define="dummy python:request.set('disable_border',1)" />
 
 <body>
+  <div metal:fill-slot="prefs_configlet_content">
+    <h1>Set the default editor</h1>
+    <p tal:condition="view/site_default_editor">
+      You may want to first select an editor and set this as the default
+      editor.  Then select
+      <em i18n:translate="vocabulary-available-editor-novalue">Use site default</em>
+      and set this in the preferences of each existing user.
+    </p>
 
-<div metal:fill-slot="prefs_configlet_content">
-  <h1>Set the default editor</h1>
-  <p tal:condition="view/site_default_editor">
-    You may want to first select an editor and set this as the default
-    editor.  Then select
-    <em i18n:translate="vocabulary-available-editor-novalue">Use site default</em>
-    and set this in the preferences of each existing user.
-  </p>
-
-  <div metal:use-macro="here/global_statusmessage/macros/portal_message">
-    Portal status message
-  </div>
-
-  <br />
-  <p tal:condition="view/site_default_editor">
-    The default editor is: <span tal:content="view/site_default_editor" />.
-  </p>
-  <p tal:condition="view/member_default_editor">
-    The default editor for new users is: <span tal:content="view/member_default_editor" />.
-  </p>
-  <p tal:condition="python:view.site_default_editor and not view.member_default_editor">
-    New users will use the default editor of the site.
-  </p>
-  <form method="post"
-        action="">
-      <div class="field">
-        <label for="editor">
-          Select the editor
-        </label>
-        <select name="editor"
-                id="editor">
-          <tal:block tal:repeat="editor view/available_editors">
-            <option value="None"
-                    tal:attributes="value editor/value;
-                                    selected editor/selected;"
-                    tal:content="editor/title"
-                    i18n:translate="">
-              WYSIWYG-editor
-            </option>
-          </tal:block>
-        </select>
-      </div>
-
-      <div class="field">
-        <input type="checkbox" name="update-user"
-               tal:attributes="checked python:request.get('update-user') and 'checked' or None;" />
-        <label for="update-user">
-          Set the editor in the preferences of each existing user.
-        </label>
-      </div>
-
-      <div class="field">
-        <input type="checkbox" name="update-default"
-               tal:attributes="checked python:request.get('update-default') and 'checked' or None;" />
-        <label for="update-default">
-          Set the default editor that is used when the member has not set a preference.
-        </label>
-      </div>
-
-      <div class="field">
-        <input type="checkbox" name="dryrun"
-               tal:attributes="checked python:request.get('dryrun') and 'checked' or None;" />
-        <label for="dryrun">Dry run (nothing will be changed)</label>
-      </div>
-    <div class="formControls">
-      <input type="submit" class="context" value="Submit" />
+    <div metal:use-macro="here/global_statusmessage/macros/portal_message">
+      Portal status message
     </div>
-  </form>
 
-</div>
+    <br />
+    <p tal:condition="view/site_default_editor">
+      The default editor is: <span tal:content="view/site_default_editor" />.
+    </p>
+    <p tal:condition="view/member_default_editor">
+      The default editor for new users is: <span tal:content="view/member_default_editor" />.
+    </p>
+    <p tal:condition="python:view.site_default_editor and not view.member_default_editor">
+      New users will use the default editor of the site.
+    </p>
+
+    <form method="post"
+          action="">
+      <fieldset>
+        <legend i18n:translate="">Set the default editor that is used when the member has not set a preference.</legend>
+        <div class="field">
+          <label for="editor">
+            Select the editor
+          </label>
+          <select name="editor"
+                  id="editor">
+            <tal:block tal:repeat="editor view/available_editors">
+              <option value="None"
+                      tal:attributes="value editor/value;
+                                      selected editor/selected;"
+                      tal:content="editor/title"
+                      i18n:translate="">
+                WYSIWYG-editor
+              </option>
+            </tal:block>
+          </select>
+        </div>
+        <div class="field">
+          <input type="checkbox" name="dryrun"
+                 tal:attributes="checked python:request.get('dryrun') and 'checked' or None;" />
+          <label for="dryrun">Dry run (nothing will be changed)</label>
+        </div>
+        <div class="formControls">
+          <input type="submit" class="context" value="Submit" name="update-default"/>
+        </div>
+      </fieldset>
+    </form>
+
+    <form method="post"
+          action="">
+      <fieldset>
+        <legend i18n:translate="">Set the editor in the preferences of each existing user.</legend>
+        <div class="field">
+          <label for="editor">
+            Select the editor
+          </label>
+          <select name="editor"
+                  id="editor">
+            <tal:block tal:repeat="editor view/available_editors">
+              <option value="None"
+                      tal:attributes="value editor/value;
+                                      selected editor/selected;"
+                      tal:content="editor/title"
+                      i18n:translate="">
+                WYSIWYG-editor
+              </option>
+            </tal:block>
+          </select>
+        </div>
+        <div class="field">
+          <input type="checkbox" name="dryrun"
+                 tal:attributes="checked python:request.get('dryrun') and 'checked' or None;" />
+          <label for="dryrun">Dry run (nothing will be changed)</label>
+        </div>
+        <div class="formControls">
+          <input type="submit" class="context" value="Submit" name="update-user" />
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </body>
 </html>
