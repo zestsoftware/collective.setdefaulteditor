@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.5 (unreleased)
+1.5 (2013-09-13)
 ----------------
 
 - Split the form in two for clarity: one for setting the default
