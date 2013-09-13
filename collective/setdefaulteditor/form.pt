@@ -12,12 +12,16 @@
 <body>
   <div metal:fill-slot="prefs_configlet_content">
     <h1>Set the default editor</h1>
-    <p tal:condition="view/site_default_editor">
-      You may want to first select an editor and set this as the default
-      editor.  Then select
-      <em i18n:translate="vocabulary-available-editor-novalue">Use site default</em>
-      and set this in the preferences of each existing user.
-    </p>
+    <div tal:condition="view/site_default_editor">
+      Suggested strategy:
+      <ol>
+        <li>First select an editor and set this as the default editor.</li>
+        <li>Then select
+        <em i18n:translate="vocabulary-available-editor-novalue">Use site default</em>
+        and set this in the preferences of each existing user.
+        </li>
+      </ol>
+    </div>
 
     <div metal:use-macro="here/global_statusmessage/macros/portal_message">
       Portal status message
