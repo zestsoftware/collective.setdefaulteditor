@@ -44,11 +44,13 @@
           </label>
           <select name="editor"
                   id="editor">
+            <tal:comment condition="nothing">We filter out the 'Use site default' editor here (value: empty string).</tal:comment>
             <tal:block tal:repeat="editor view/available_editors">
               <option value="None"
                       tal:attributes="value editor/value;
                                       selected editor/selected;"
                       tal:content="editor/title"
+                      tal:condition="editor/value"
                       i18n:translate="">
                 WYSIWYG-editor
               </option>
